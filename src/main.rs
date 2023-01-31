@@ -37,7 +37,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let name: String;
     let picture: String;
     let endpoint: String;
-    let message: String;
 
     if args.user.is_none() {
         name = args
@@ -61,10 +60,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .context("--config must be provided when using --user")?,
         );
 
-        let file = std::fs::read_to_string(config_file).context(format!(
-            "Cannot read config file {}",
-            &args.config.as_ref().unwrap()
-        ))?;
+        let file = std::fs::read_to_string(config_file)
+            .map_err(|_e| format!("Cannot read config file {}", &args.config.as_ref().unwrap()))?;
 
         let config: Table = file.parse().unwrap();
 
@@ -110,7 +107,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .to_string();
     }
 
-    message = args
+    let message = args
         .message
         .ok_or(Error)
         .map_err(|_error| format!("--message must be provided"))?;
