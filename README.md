@@ -3,7 +3,7 @@ Wraps a network request to a discord webhook endpoint
 
 ## Usage
 ```
-Usage: discord-webhook-wrapper [OPTIONS]
+Usage: dww [OPTIONS]
 
 Options:
   -c, --config <CONFIG>      Path to config toml
